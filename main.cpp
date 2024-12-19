@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <SPI.h>
-#include <MIDI.h>
+// #include <MIDI.h>
 #include "FastLED.h"
 #include <iostream>
-#include <Adafruit_TinyUSB.h>
+// #include <Adafruit_TinyUSB.h>
 // #include <Adafruit_GFX.h>
 // #include <Adafruit_SSD1306.h>
 
