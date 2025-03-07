@@ -548,39 +548,14 @@ for(;;){
 
 
       // Step 2: Get the bits array via SPI
-      uint16_t data = SPI.transfer16(0);  // Transfer 16 bits from the 74HC165
-      uint16_t data2 = SPI.transfer16(0); // Transfer 16 bits from the 74HC165
-      uint16_t data3 = SPI.transfer16(0); // Transfer 16 bits from the 74HC165
-      uint16_t data4 = SPI.transfer16(0); // Transfer 16 bits from the 74HC165
-      uint16_t data5 = SPI.transfer16(0); // Transfer 16 bits from the 74HC165
-
-
-      for (int i = 15; i >= 0; --i) {
-            bits[i] = data & 1;
-            data >>= 1;
-      }
-
-
-      for (int i = 31; i >= 16; --i) {
-            bits[i] = data2 & 1;
-            data2 >>= 1;
-      }
-      
-      for (int i = 47; i >= 32; --i) {
-            bits[i] = data3 & 1;
-            data3 >>= 1;
-      }
-      
-      for (int i = 63; i >= 48; --i) {
-            bits[i] = (data4 & 1);
-            data4 >>= 1;
-      }
-
-
-      for (int i = 79; i >= 64; --i) {
-            bits[i] = (data5 & 1);
-            data5 >>= 1;
-      }
+      for (int byte = 0; byte < 10; byte++) {
+        uint8_t data = SPI.transfer(0);
+        
+        // Unpack the byte into the bits array
+        for (int bit = 0; bit < 8; bit++) {
+            bits[byte * 8 + bit] = (data >> (7 - bit)) & 1;
+        }
+    }
 
 
       // for (int i = 0; i <= 79; i++){ ////// PRINT SERIAL OUTPUT
@@ -851,7 +826,7 @@ FastLED.addLeds<WS2812B, LED_BUTTONS_DATA_PIN, GRB>(button_leds_array, 15);
 
 
 //     FastLED.addLeds<WS2812B, LED_RING_DATA_PIN, GRB>(ring_leds_array, NUM_RING_LEDS);
-FastLED.setBrightness(80);
+FastLED.setBrightness(20);
 FastLED.show();
 
 remap_leds();
