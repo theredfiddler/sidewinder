@@ -263,7 +263,7 @@ bool pushed_flag;
 bool released_flag;
 
 };
-
+  
 
 class SeqClass {
 public:
